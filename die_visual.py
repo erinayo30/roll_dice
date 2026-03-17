@@ -1,5 +1,9 @@
 import plotly.express as px
 from die import Die
+import plotly.io as pio
+
+
+pio.renderers.default = "browser"
 
 
 # create a D6
@@ -15,11 +19,14 @@ frequencies= []
 pos_results = range(1, die.num_sides+1)
 for value in pos_results:
     frequency = results.count(value)
-    frequencies.append(f"{value} appears {frequency}")
+    frequencies.append(frequency)
 
 # print(frequencies)
 #
 # print(results)
 # Visualize the results
-fig = px.bar(x=pos_results, y= frequencies,)
-fig.show()
+title= "Results of Rolling One D6 1,000 Times"
+labels= {'x': "Results", "y": "Frequency of results"}
+fig = px.bar(x=pos_results, y= frequencies, title=title, labels=labels)
+fig.show(renderer="browser")
+fig.write_html("dice_results.html", auto_open=True)
